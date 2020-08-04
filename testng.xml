@@ -9,7 +9,8 @@
 	<test name="SignIn Flow Testing ">
 		<classes>
 			<class name="com.pastbook.automation.test.TestSignInFlowWithExsistingEmailUser" />
-			
+			<class name="com.pastbook.automation.test.TestSignInViaFacebookConnect" />
+			<class name="com.pastbook.automation.test.TestUserCreatedPastbookDisplayingAfterSignIn" />
 				
 		</classes>
 	</test> <!-- Test -->
