@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Passbook Automation Suite" duration-ms="10171" started-at="2020-08-03T20:34:30Z" finished-at="2020-08-03T20:34:40Z">
+    <groups>
+    </groups>
+    <test name="SignIn Flow Testing " duration-ms="10171" started-at="2020-08-03T20:34:30Z" finished-at="2020-08-03T20:34:40Z">
+      <class name="com.passbook.automation.test.TestSignInFlowWithGmailUser">
+        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:com.passbook.automation.test.TestSignInFlowWithGmailUser@3c756e4d]" name="beforeSuite" is-config="true" duration-ms="8143" started-at="2020-08-03T20:34:22Z" finished-at="2020-08-03T20:34:30Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeSuite -->
+        <test-method status="PASS" signature="beforeClass()[pri:0, instance:com.passbook.automation.test.TestSignInFlowWithGmailUser@3c756e4d]" name="beforeClass" is-config="true" duration-ms="4" started-at="2020-08-03T20:34:30Z" finished-at="2020-08-03T20:34:30Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method status="PASS" signature="setupTest(java.lang.String, java.lang.String)[pri:0, instance:com.passbook.automation.test.TestSignInFlowWithGmailUser@3c756e4d]" name="setupTest" is-config="true" duration-ms="8805" started-at="2020-08-03T20:34:30Z" finished-at="2020-08-03T20:34:38Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[https://moments.pastbook.com/]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[SignInFlow]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setupTest -->
+        <test-method status="PASS" signature="testPassbookWebAppkicationAvailability()[pri:0, instance:com.passbook.automation.test.TestSignInFlowWithGmailUser@3c756e4d]" name="testPassbookWebAppkicationAvailability" duration-ms="689" started-at="2020-08-03T20:34:38Z" finished-at="2020-08-03T20:34:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testPassbookWebAppkicationAvailability -->
+        <test-method status="PASS" signature="afterMethod(org.testng.ITestResult)[pri:0, instance:com.passbook.automation.test.TestSignInFlowWithGmailUser@3c756e4d]" name="afterMethod" is-config="true" duration-ms="656" started-at="2020-08-03T20:34:39Z" finished-at="2020-08-03T20:34:40Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=testPassbookWebAppkicationAvailability status=SUCCESS method=TestSignInFlowWithGmailUser.testPassbookWebAppkicationAvailability()[pri:0, instance:com.passbook.automation.test.TestSignInFlowWithGmailUser@3c756e4d] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+      </class> <!-- com.passbook.automation.test.TestSignInFlowWithGmailUser -->
+    </test> <!-- SignIn Flow Testing  -->
+  </suite> <!-- Passbook Automation Suite -->
+</testng-results>

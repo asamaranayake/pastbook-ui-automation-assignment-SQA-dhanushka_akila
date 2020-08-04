@@ -1,0 +1,4 @@
+# Created at 2020-08-04T02:04:20.441
+Boot Manifest-JAR contains absolute paths in classpath 'D:\My Projects\passbook-ui-automation\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+

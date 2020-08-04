@@ -1,0 +1,13 @@
+com\passbook\automation\core\PageBase.class
+com\passbook\automation\pages\FacebookPage.class
+com\passbook\automation\util\DataLoader.class
+com\passbook\automation\pages\SideMenuPage.class
+com\passbook\automation\pojo\SignIn.class
+com\passbook\automation\util\EmailHandler.class
+com\passbook\automation\pages\HomePage.class
+com\passbook\automation\util\ConfigUtil.class
+com\passbook\automation\util\WebDriverUtil.class
+com\passbook\automation\util\ExcelDataHandler.class
+com\passbook\automation\pages\SignInPage.class
+com\passbook\automation\core\UITestBase.class
+com\passbook\automation\util\ExtentReportManagerUtil.class

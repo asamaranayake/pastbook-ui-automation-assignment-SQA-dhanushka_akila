@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Passbook Automation Suite" parallel="false" verbose="2">
+
+	<parameter name="TestUrl" value="https://moments.pastbook.com/" />
+	<parameter name="excelSheetName" value = "SignInFlow" />
+
+	<test name="SignIn Flow Testing ">
+		<classes>
+			<class name="com.pastbook.automation.test.TestSignInFlowWithExsistingEmailUser" />
+			
+				
+		</classes>
+	</test> <!-- Test -->
+</suite> <!-- Suite -->
