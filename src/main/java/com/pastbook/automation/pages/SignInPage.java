@@ -88,8 +88,7 @@ public class SignInPage extends PageBase {
 	}
 
 	public PastBookCreatePage navigateToPastbookCreatePage() throws Exception {
-		PastBookCreatePage createPage = null;
-
+		
 		WebDriverWait wait = new WebDriverWait(driver, 5);
 		wait.until(ExpectedConditions.numberOfWindowsToBe(1));
 		
@@ -97,12 +96,14 @@ public class SignInPage extends PageBase {
 		
 		if (windows.size() == 1) {
 			driver.switchTo().window(parentWindow);
-			createPage = new PastBookCreatePage(driver);
+			return  new PastBookCreatePage(driver);
 		} else {
+		
 			throw new Exception("SignIn Window is not Closed");
+			
 		}
 
-		return createPage;
+		
 	}
 
 	public PastBookPreviewPage navigateToPastbookPreviewPage() throws Exception {

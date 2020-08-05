@@ -8,6 +8,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.pastbook.automation.core.UITestBase;
+import com.pastbook.automation.pages.FacebookPage;
 import com.pastbook.automation.pages.HomePage;
 import com.pastbook.automation.pages.PastBookCreatePage;
 import com.pastbook.automation.pages.SideMenuPage;
@@ -24,10 +25,9 @@ import com.pastbook.automation.util.ExcelDataHandler;
 public class TestSignInViaFacebookConnect extends UITestBase {
 
 	SignIn signInData = new SignIn();
-	HomePage homepage ;
+	HomePage homepage;
 	SideMenuPage sidemenu;
 	SignInPage signinpage;
-	
 
 	@Parameters({ "TestUrl", "excelSheetName" })
 	@BeforeClass
@@ -45,54 +45,82 @@ public class TestSignInViaFacebookConnect extends UITestBase {
 
 	@Test(priority = 0)
 	public void testPassbookWebAppkicationAvailability() {
-		
+
 		/******************************************************************/
 		ITestResult result = Reporter.getCurrentTestResult();
-		result.setAttribute("TestName", "Verify if a user will be able to login with a valid username and valid password for Exsisting users");
-		result.setAttribute("Expected", "Should be logged in Successfully and Should display Create Pastbook Page");
+		result.setAttribute("TestName", "Verify if a user will be able to Sign in Via Facebook Connect");
+		result.setAttribute("Expected", "Should be logged in Successfully via Facebook");
 		/******************************************************************/
 		try {
-		
-		homepage = new HomePage(driver);
-		sidemenu = homepage.navigateToSideMenu();
-		if(sidemenu.getPageAvailability()) {
-			
-			signinpage = sidemenu.navigateToSignInPage();
-			if(signinpage == null) {
-				result.setAttribute("Actual","SignInPage Not pop up");
-				Assert.fail("SignInPage Not pop up");
-				
-			}else if(signinpage.getPageAvailability()) {
-				PastBookCreatePage createPage =  signinpage.emailLogingIntoCreatePage(signInData.getUserName(), signInData.getPassword());
-				if(createPage.getPageAvailability()) {
-					String expectedCcreatePageText = " Hey! It seems you have not created any PastBook yet, go ahead!";
-					
-					if( expectedCcreatePageText.equals(createPage.getCreatepage_openingtext_element().getText()) ){
-						result.setAttribute("Actual","logged in Successfully and Should display Create Pastbook Page");
-					}else {
-						result.setAttribute("Actual","Not Displaying Pastbook Create page for exsisting User");
-						Assert.fail("Not Displaying Pastbook Create page for exsisting User");
+
+			homepage = new HomePage(driver);
+			sidemenu = homepage.navigateToSideMenu();
+			if (sidemenu.getPageAvailability()) {
+
+				signinpage = sidemenu.navigateToSignInPage();
+				if (signinpage == null) {
+					result.setAttribute("Actual", "SignInPage Not pop up");
+					Assert.fail("SignInPage Not pop up");
+
+				} else if (signinpage.getPageAvailability()) {
+
+					FacebookPage fbPag = signinpage.navigateToFacebookLoginPage();
+					if (fbPag.getPageAvailability()) {
+
+						fbPag.enterFbUserName(signInData.getUserName());
+						fbPag.enterPassword(signInData.getPassword());
+						fbPag.clickLoginbutton();
+
+						if (fbPag.getPageAvailability(fbPag.getFacebook_continue_button())) {
+
+							PastBookCreatePage createPage = null;
+
+							try {
+								createPage = fbPag.navigateToPastbookCreatePage();
+
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+
+							if (createPage.getPageAvailability()) {
+								String expectedCcreatePageText = " Hey! It seems you have not created any PastBook yet, go ahead!";
+
+								if (expectedCcreatePageText
+										.equals(createPage.getCreatepage_openingtext_element().getText())) {
+									result.setAttribute("Actual",
+											"Sign in Successfully via Facebook and redirect to Create Pastbook Page");
+								} else {
+									result.setAttribute("Actual",
+											"Not Displaying Pastbook Create page for exsisting User");
+									Assert.fail("Not Displaying Pastbook Create page for exsisting User");
+								}
+
+							} else {
+								result.setAttribute("Actual", "App Permission popup Not Loaded in the Popup Window");
+								Assert.fail("App Permission popup Not Loaded in the Popup Window");
+							}
+
+						} else {
+							result.setAttribute("Actual", "facebook login page Not Loaded in the Popup Window");
+							Assert.fail("facebook login page Not Loaded in the Popup Window");
+						}
+
+					} else {
+						result.setAttribute("Actual", "SignInPage Not Loaded in the Popup Window");
+						Assert.fail("SignInPage Not Loaded in the Popup Window");
 					}
-					
-				}else {
-					result.setAttribute("Actual","SignInPage Not Loaded in the Popup Window");
-					Assert.fail("SignInPage Not Loaded in the Popup Window");
+
+				} else {
+					result.setAttribute("Actual", "SideMenu is not Displayed");
+					Assert.fail("SideMenu is not Displayed");
 				}
-				
-			}else {
-				result.setAttribute("Actual","SignInPage Not Loaded in the Popup Window");
-				Assert.fail("SignInPage Not Loaded in the Popup Window");
 			}
-			
-		}else {
-			result.setAttribute("Actual","SideMenu is not Displayed");
-			Assert.fail("SideMenu is not Displayed");
-		}
-		}catch (Exception e) {
-			result.setAttribute("Actual","testPassbookWebAppkicationAvailability execution error due to ");
-			Assert.fail("testPassbookWebAppkicationAvailability execution error due to <br>" ,e);
+		} catch (Exception e) {
+			result.setAttribute("Actual", "testPassbookWebAppkicationAvailability execution error due to ");
+			Assert.fail("testPassbookWebAppkicationAvailability execution error due to <br>", e);
 		}
 	}
+
 	public SignIn getTestData(String excelFilePath, String SheetNum) throws Exception {
 
 		DataLoader dataLoader = new DataLoader();

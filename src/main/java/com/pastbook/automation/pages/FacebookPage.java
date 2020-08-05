@@ -29,7 +29,7 @@ public class FacebookPage extends PageBase {
 	private WebElement facebook_password_textbox;
 
 	@FindBy(xpath = "//*[@id='loginbutton']")
-	private WebElement Login_as_facebook;
+	private WebElement login_button;
 
 	@FindBy(xpath = "//*[@id='u_0_15']/div[2]/div[1]/div[1]/button")
 	private WebElement continue_button;
@@ -43,16 +43,22 @@ public class FacebookPage extends PageBase {
 
 	@Override
 	public boolean getPageAvailability() {
-		// TODO Auto-generated method stub
-		return false;
+		return getPageAvailability(facebook_logo_img);
+	}
+
+	public WebElement getFacebook_continue_button() {
+		return facebook_continue_button;
 	}
 
 	public PastBookCreatePage navigateToPastbookCreatePage() throws Exception {
-		PastBookCreatePage createPage = null;
 
+		this.clickContinueButton();
+		
+		
 		WebDriverWait wait = new WebDriverWait(driver, 5);
 		wait.until(ExpectedConditions.numberOfWindowsToBe(1));
 
+		PastBookCreatePage createPage = null;
 		if (windows.size() == 1) {
 			driver.switchTo().window(parentWindow);
 			createPage = new PastBookCreatePage(driver);
@@ -90,6 +96,28 @@ public class FacebookPage extends PageBase {
 		facebook_password_textbox.click();
 		facebook_password_textbox.sendKeys(new String(Base64.getDecoder().decode(fbPW)));
 
+		return this;
+	}
+
+	public FacebookPage clickLoginbutton() {
+		login_button.click();
+		return this;
+	}
+
+	public FacebookPage clickContinueButton() {
+
+		WebDriverWait wait = new WebDriverWait(driver, 2);
+		wait.until(ExpectedConditions.elementToBeClickable(continue_button));
+		continue_button.click();
+
+		return this;
+	}
+
+	public FacebookPage clickCancelButton() {
+
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		wait.until(ExpectedConditions.elementToBeClickable(cancel_button));
+		cancel_button.click();
 		return this;
 	}
 
