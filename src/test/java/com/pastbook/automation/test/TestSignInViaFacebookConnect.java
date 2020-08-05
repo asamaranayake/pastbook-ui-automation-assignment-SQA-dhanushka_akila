@@ -3,6 +3,7 @@ package com.pastbook.automation.test;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -85,35 +86,35 @@ public class TestSignInViaFacebookConnect extends UITestBase {
 							if (createPage.getPageAvailability()) {
 								String expectedCcreatePageText = " Hey! It seems you have not created any PastBook yet, go ahead!";
 
-								if (expectedCcreatePageText
-										.equals(createPage.getCreatepage_openingtext_element().getText())) {
-									result.setAttribute("Actual",
-											"Sign in Successfully via Facebook and redirect to Create Pastbook Page");
+								if (expectedCcreatePageText.equals(createPage.getCreatepage_openingtext_element().getText())) {
+									result.setAttribute("Actual", "Sign in Successfully via Facebook and redirect to Create Pastbook Page");
 								} else {
-									result.setAttribute("Actual",
-											"Not Displaying Pastbook Create page for exsisting User");
-									Assert.fail("Not Displaying Pastbook Create page for exsisting User");
+									result.setAttribute("Actual","User Canno't SignIn via Facebook ");
+									Assert.fail("User Canno't SignIn via Facebook");
 								}
 
 							} else {
-								result.setAttribute("Actual", "App Permission popup Not Loaded in the Popup Window");
-								Assert.fail("App Permission popup Not Loaded in the Popup Window");
+								result.setAttribute("Actual", "Pastbook Create Page is not Loading");
+								Assert.fail("Pastbook Create Page is not Loading");
 							}
 
 						} else {
-							result.setAttribute("Actual", "facebook login page Not Loaded in the Popup Window");
-							Assert.fail("facebook login page Not Loaded in the Popup Window");
+							result.setAttribute("Actual", "App Permission popup Not Loaded in the Popup Window");
+							Assert.fail("App Permission popup Not Loaded in the Popup Window");
 						}
 
-					} else {
-						result.setAttribute("Actual", "SignInPage Not Loaded in the Popup Window");
-						Assert.fail("SignInPage Not Loaded in the Popup Window");
+					}else {
+						result.setAttribute("Actual", "facebook login page Not Loaded in the Popup Window");
+						Assert.fail("facebook login page Not Loaded in the Popup Window");
 					}
 
 				} else {
-					result.setAttribute("Actual", "SideMenu is not Displayed");
-					Assert.fail("SideMenu is not Displayed");
+					result.setAttribute("Actual", "SignInPage Not Loaded in the Popup Window");
+					Assert.fail("SignInPage Not Loaded in the Popup Window");
 				}
+			}else {
+				result.setAttribute("Actual", "SideMenu is not Displayed");
+				Assert.fail("SideMenu is not Displayed");
 			}
 		} catch (Exception e) {
 			result.setAttribute("Actual", "testPassbookWebAppkicationAvailability execution error due to ");
@@ -121,10 +122,23 @@ public class TestSignInViaFacebookConnect extends UITestBase {
 		}
 	}
 
+	
+	
+	@AfterClass
+	public void tearDown() {
+		try {
+			driver.wait(10000);
+			driver.quit();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public SignIn getTestData(String excelFilePath, String SheetNum) throws Exception {
 
 		DataLoader dataLoader = new DataLoader();
-		signInData = dataLoader.getSignInData(new ExcelDataHandler().getExcelData(excelFilePath, SheetNum))[1][0];
+		signInData = dataLoader.getSignInData(new ExcelDataHandler().getExcelData(excelFilePath, SheetNum))[2][0];
 		return signInData;
 	}
 

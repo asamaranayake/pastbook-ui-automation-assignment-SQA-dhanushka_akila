@@ -34,7 +34,7 @@ public abstract class UITestBase {
 	public String TEST_URL = "";
 
 	@BeforeSuite
-	public synchronized void beforeSuite() {
+	public synchronized void beforeSuite() throws Exception {
 		logger = Logger.getLogger(this.getClass());
 		driver = WebDriverUtil.getDriver();
 		extent = ExtentReportManagerUtil.createInstance("ExtentReport.html");
@@ -43,15 +43,15 @@ public abstract class UITestBase {
 
 	}
 
-	@BeforeClass
-	public synchronized void beforeClass() {
+	@BeforeClass()
+	public synchronized void beforeClass() throws Exception  {
 		ExtentTest parent = extent
 				.createTest(getClass().getName().substring(getClass().getName().lastIndexOf(".") + 1));
 		parentTest.set(parent);
 	}
 
 	@AfterMethod
-	public synchronized void afterMethod(ITestResult result) {
+	public synchronized void afterMethod(ITestResult result) throws Exception {
 		ThreadLocal<ExtentTest> test = new ThreadLocal<ExtentTest>();
 		
 		ExtentTest child;
@@ -104,7 +104,7 @@ public abstract class UITestBase {
 		extent.flush();
 	}
 
-	public String takeScreenshot(String testDescription) {
+	public String takeScreenshot(String testDescription) throws Exception {
 		String FileName = testDescription + ".jpg";
 		String path = screenshotPath + "/" + FileName;
 

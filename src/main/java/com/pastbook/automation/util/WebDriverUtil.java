@@ -8,7 +8,7 @@ import org.openqa.selenium.safari.SafariDriver;
 
 public class WebDriverUtil {
 
-	public static WebDriver getDriver(String url) {
+	public static WebDriver getDriver(String url) throws Exception {
 
 		WebDriver driver = null;
 		String browser = ConfigUtil.getConfigUtil().getProperty("browser");
@@ -37,7 +37,7 @@ public class WebDriverUtil {
 
 	}
 
-	public static WebDriver getDriver() {
+	public static WebDriver getDriver() throws Exception {
 
 		WebDriver driver = null;
 		String browser = ConfigUtil.getConfigUtil().getProperty("browser");

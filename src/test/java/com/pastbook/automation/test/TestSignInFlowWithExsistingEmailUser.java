@@ -70,6 +70,7 @@ public class TestSignInFlowWithExsistingEmailUser extends UITestBase {
 					signinpage.enterPasswordField(signInData.getPassword());
 					signinpage.clickPasswordSubmitButton();
 					PastBookCreatePage createPage = null;
+					
 					try {
 						createPage = signinpage.navigateToPastbookCreatePage();
 					} catch (Exception e) {
