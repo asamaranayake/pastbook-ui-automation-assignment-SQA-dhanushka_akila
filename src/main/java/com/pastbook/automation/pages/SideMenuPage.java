@@ -18,14 +18,21 @@ public class SideMenuPage extends PageBase {
 	@FindBy(xpath = "//*[@id='sidemenu']/div/a[7]")
 	private WebElement signIn_button;
 
-	
-	
+	@FindBy(xpath = "//*[@id='sidemenu']/div/a[9]")
+	private WebElement signOut_button;
+
 	public SideMenuPage(WebDriver driver) {
 		super(driver);
 	}
-	
+
+	@Override
+	public boolean getPageAvailability() {
+
+		return getPageAvailability(sidemenu_element);
+	}
+
 	public WebElement getSignInButtonElement() {
-		
+
 		return this.signIn_button;
 	}
 
@@ -34,7 +41,7 @@ public class SideMenuPage extends PageBase {
 		parentWindow = driver.getWindowHandle();
 
 		this.signIn_button.click();
-		windows= driver.getWindowHandles();
+		windows = driver.getWindowHandles();
 
 		if (windows.size() == 2) {
 
@@ -54,10 +61,12 @@ public class SideMenuPage extends PageBase {
 
 	}
 
-	@Override
-	public boolean getPageAvailability() {
+	public HomePage clickSignOutButton() {
+		signOut_button.click();
+		HomePage homepage = new HomePage(driver);
 
-		return getPageAvailability(sidemenu_element);
+		return homepage;
+
 	}
 
 }

@@ -1,8 +1,12 @@
 package com.pastbook.automation.pages;
 
+import java.util.Base64;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.pastbook.automation.core.PageBase;
 
@@ -21,8 +25,17 @@ public class FacebookPage extends PageBase {
 	@FindBy(xpath = "//*[@id='email']")
 	private WebElement facebook_email_textbox;
 
+	@FindBy(xpath = "//*[@id='pass']")
+	private WebElement facebook_password_textbox;
+
 	@FindBy(xpath = "//*[@id='loginbutton']")
 	private WebElement Login_as_facebook;
+
+	@FindBy(xpath = "//*[@id='u_0_15']/div[2]/div[1]/div[1]/button")
+	private WebElement continue_button;
+
+	@FindBy(xpath = "//*[@id='u_0_0']")
+	private WebElement cancel_button;
 
 	public FacebookPage(WebDriver driver) {
 		super(driver);
@@ -33,13 +46,16 @@ public class FacebookPage extends PageBase {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	public PassBookCreatePage navigateToPastbookCreatePage() throws Exception {
-		PassBookCreatePage createPage = null;
+
+	public PastBookCreatePage navigateToPastbookCreatePage() throws Exception {
+		PastBookCreatePage createPage = null;
+
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		wait.until(ExpectedConditions.numberOfWindowsToBe(1));
 
 		if (windows.size() == 1) {
 			driver.switchTo().window(parentWindow);
-			createPage = new PassBookCreatePage(driver);
+			createPage = new PastBookCreatePage(driver);
 		} else {
 			throw new Exception("Facebook SignIn Window is not Closed");
 		}
@@ -59,9 +75,25 @@ public class FacebookPage extends PageBase {
 
 		return previewPage;
 	}
-	
 
-	public PassBookCreatePage facebookLogingIntoCreatePage(String fbUN, String fbPW) throws Exception {
+	public FacebookPage enterFbUserName(String fbUN) {
+
+		facebook_email_textbox.clear();
+		facebook_email_textbox.click();
+		facebook_email_textbox.sendKeys(fbUN);
+
+		return this;
+	}
+
+	public FacebookPage enterPassword(String fbPW) {
+		facebook_password_textbox.clear();
+		facebook_password_textbox.click();
+		facebook_password_textbox.sendKeys(new String(Base64.getDecoder().decode(fbPW)));
+
+		return this;
+	}
+
+	public PastBookCreatePage facebookLogingIntoCreatePage(String fbUN, String fbPW) throws Exception {
 
 		return navigateToPastbookCreatePage();
 

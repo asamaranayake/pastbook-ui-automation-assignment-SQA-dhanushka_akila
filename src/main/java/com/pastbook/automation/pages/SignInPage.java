@@ -5,6 +5,8 @@ import java.util.Base64;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.pastbook.automation.core.PageBase;
 
@@ -57,6 +59,8 @@ public class SignInPage extends PageBase {
 	}
 
 	public SignInPage enterEmail(String userName) {
+		email_textbox.clear();
+		email_textbox.click();
 		email_textbox.sendKeys(userName);
 		return this;
 	}
@@ -67,8 +71,9 @@ public class SignInPage extends PageBase {
 	}
 
 	public SignInPage clickPasswordField() {
-		password_textbox.click();
 		password_textbox.clear();
+		password_textbox.click();
+
 		return this;
 	}
 
@@ -81,17 +86,18 @@ public class SignInPage extends PageBase {
 		submit_button.submit();
 		return this;
 	}
-	
-	
-	
-	
 
-	public PassBookCreatePage navigateToPastbookCreatePage() throws Exception {
-		PassBookCreatePage createPage = null;
+	public PastBookCreatePage navigateToPastbookCreatePage() throws Exception {
+		PastBookCreatePage createPage = null;
 
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		wait.until(ExpectedConditions.numberOfWindowsToBe(1));
+		
+		System.out.println("avaialble Window count"+windows.size());
+		
 		if (windows.size() == 1) {
 			driver.switchTo().window(parentWindow);
-			createPage = new PassBookCreatePage(driver);
+			createPage = new PastBookCreatePage(driver);
 		} else {
 			throw new Exception("SignIn Window is not Closed");
 		}
@@ -102,6 +108,11 @@ public class SignInPage extends PageBase {
 	public PastBookPreviewPage navigateToPastbookPreviewPage() throws Exception {
 		PastBookPreviewPage previewPage = null;
 
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		wait.until(ExpectedConditions.numberOfWindowsToBe(1));
+		
+		System.out.println("avaialble Window count"+windows.size());
+		
 		if (windows.size() == 1) {
 			driver.switchTo().window(parentWindow);
 			previewPage = new PastBookPreviewPage(driver);
@@ -111,24 +122,37 @@ public class SignInPage extends PageBase {
 
 		return previewPage;
 	}
-	
-	
+
 	public FacebookPage navigateToFacebookLoginPage() {
-		
-		
+		facebook_login_button.click();
 		FacebookPage fbpage = new FacebookPage(driver);
 		return fbpage;
 	}
 
-	
-
-	public PassBookCreatePage emailLogingIntoCreatePage(String UN, String PW) throws Exception {
+	public PastBookCreatePage emailLogingIntoCreatePage(String UN, String PW) throws Exception {
+		this.clickUserEmailLink();
+		this.enterEmail(UN);
+		this.clickEmailSubmitButton();
+		this.clickPasswordField();
+		this.enterPasswordField(PW);
+		this.clickPasswordSubmitButton();
+		
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		wait.until(ExpectedConditions.numberOfWindowsToBe(1));
 
 		return navigateToPastbookCreatePage();
 	}
 
 	public PastBookPreviewPage emailLogingIntoPreviewPage(String UN, String PW) throws Exception {
-
+		this.clickUserEmailLink();
+		this.enterEmail(UN);
+		this.clickEmailSubmitButton();
+		this.clickPasswordField();
+		this.enterPasswordField(PW);
+		this.clickPasswordSubmitButton();
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		wait.until(ExpectedConditions.numberOfWindowsToBe(1));
+		
 		return navigateToPastbookPreviewPage();
 	}
 
