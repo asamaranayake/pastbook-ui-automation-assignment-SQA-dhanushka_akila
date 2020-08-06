@@ -1,6 +1,6 @@
 package com.pastbook.automation.core;
 
-import java.awt.AWTException;
+
 /**
  * @author Akila
  *
@@ -13,7 +13,6 @@ import java.io.File;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
