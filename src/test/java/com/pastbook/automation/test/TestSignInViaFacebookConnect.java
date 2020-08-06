@@ -71,39 +71,50 @@ public class TestSignInViaFacebookConnect extends UITestBase {
 						fbPag.enterFbUserName(signInData.getUserName());
 						fbPag.enterPassword(signInData.getPassword());
 						fbPag.clickLoginbutton();
+						Thread.sleep(3000);
+						driver.manage().window().maximize();
+						fbPag.clickESCButton();
+						
+						
+						
+						try {
+							if (fbPag.getPageAvailability(fbPag.getFbPopup_window_element())) {
 
-						if (fbPag.getPageAvailability(fbPag.getFacebook_continue_button())) {
+								PastBookCreatePage createPage = null;
 
-							PastBookCreatePage createPage = null;
+								try {
+									createPage = fbPag.navigateToPastbookCreatePage();
 
-							try {
-								createPage = fbPag.navigateToPastbookCreatePage();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
 
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
+								if (createPage.getPageAvailability()) {
+									String expectedCcreatePageText = " Hey! It seems you have not created any PastBook yet, go ahead!";
 
-							if (createPage.getPageAvailability()) {
-								String expectedCcreatePageText = " Hey! It seems you have not created any PastBook yet, go ahead!";
+									if (expectedCcreatePageText
+											.equals(createPage.getCreatepage_openingtext_element().getText())) {
+										result.setAttribute("Actual",
+												"Sign in Successfully via Facebook and redirect to Create Pastbook Page");
+									} else {
+										result.setAttribute("Actual", "User Canno't SignIn via Facebook ");
+										Assert.fail("User Canno't SignIn via Facebook");
+									}
 
-								if (expectedCcreatePageText.equals(createPage.getCreatepage_openingtext_element().getText())) {
-									result.setAttribute("Actual", "Sign in Successfully via Facebook and redirect to Create Pastbook Page");
 								} else {
-									result.setAttribute("Actual","User Canno't SignIn via Facebook ");
-									Assert.fail("User Canno't SignIn via Facebook");
+									result.setAttribute("Actual", "Pastbook Create Page is not Loading");
+									Assert.fail("Pastbook Create Page is not Loading");
 								}
 
 							} else {
-								result.setAttribute("Actual", "Pastbook Create Page is not Loading");
-								Assert.fail("Pastbook Create Page is not Loading");
+								result.setAttribute("Actual", "App Permission popup Not Loaded in the Popup Window");
+								Assert.fail("App Permission popup Not Loaded in the Popup Window");
 							}
-
-						} else {
-							result.setAttribute("Actual", "App Permission popup Not Loaded in the Popup Window");
-							Assert.fail("App Permission popup Not Loaded in the Popup Window");
+						} catch (Exception e) {
+							e.printStackTrace();
 						}
 
-					}else {
+					} else {
 						result.setAttribute("Actual", "facebook login page Not Loaded in the Popup Window");
 						Assert.fail("facebook login page Not Loaded in the Popup Window");
 					}
@@ -112,7 +123,7 @@ public class TestSignInViaFacebookConnect extends UITestBase {
 					result.setAttribute("Actual", "SignInPage Not Loaded in the Popup Window");
 					Assert.fail("SignInPage Not Loaded in the Popup Window");
 				}
-			}else {
+			} else {
 				result.setAttribute("Actual", "SideMenu is not Displayed");
 				Assert.fail("SideMenu is not Displayed");
 			}
@@ -122,19 +133,17 @@ public class TestSignInViaFacebookConnect extends UITestBase {
 		}
 	}
 
-	
-	
 	@AfterClass
 	public void tearDown() {
 		try {
-			driver.wait(10000);
+			driver.wait(1000);
 			driver.quit();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public SignIn getTestData(String excelFilePath, String SheetNum) throws Exception {
 
 		DataLoader dataLoader = new DataLoader();

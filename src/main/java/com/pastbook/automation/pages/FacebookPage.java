@@ -36,6 +36,9 @@ public class FacebookPage extends PageBase {
 
 	@FindBy(xpath = "//*[@id='u_0_0']")
 	private WebElement cancel_button;
+	
+	@FindBy(xpath="//*[@id='platformDialogForm']")
+	private WebElement fbPopup_window_element;
 
 	public FacebookPage(WebDriver driver) {
 		super(driver);
@@ -49,6 +52,11 @@ public class FacebookPage extends PageBase {
 	public WebElement getFacebook_continue_button() {
 		return facebook_continue_button;
 	}
+	
+	public WebElement getFbPopup_window_element() {
+		return fbPopup_window_element;
+	}
+	
 
 	public PastBookCreatePage navigateToPastbookCreatePage() throws Exception {
 

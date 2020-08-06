@@ -1,5 +1,6 @@
 package com.pastbook.automation.core;
 
+import java.awt.AWTException;
 /**
  * @author Akila
  *
@@ -12,6 +13,7 @@ import java.io.File;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -83,20 +85,30 @@ public abstract class PageBase {
 		}
 	}
 
+	public void clickESCButton() throws Exception {
+		Robot robot = new Robot();
+		robot.keyPress(KeyEvent.VK_ESCAPE);
+	
+		
+	}
+	
+	
 	public PageBase refreshPage() {
 
 		driver.navigate().refresh();
 		return this;
 	}
 
-	public PageBase switchWindows(String pageTitle) {
+	public WebDriver switchWindows(String pageTitle) {
 		Set<String> windows = driver.getWindowHandles();
 
 		for (String window : windows) {
-			driver.switchTo().window(window);
+			
 
 			if (driver.getTitle().contains(pageTitle)) {
-				return this;
+				driver.switchTo().window(window);
+				return driver;
+				
 			}
 
 		}
